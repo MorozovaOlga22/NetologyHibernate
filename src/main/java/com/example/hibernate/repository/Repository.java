@@ -1,20 +1,19 @@
 package com.example.hibernate.repository;
 
 import com.example.hibernate.entities.Person;
+import com.example.hibernate.entities.PersonId;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @org.springframework.stereotype.Repository
-public class Repository {
-    @PersistenceContext
-    private EntityManager entityManager;
+public interface Repository extends CrudRepository<Person, PersonId> {
 
-    @SuppressWarnings("unchecked")
-    public List<Person> getPersonsByCity(String city) {
-        return entityManager.createQuery("SELECT p FROM Person p WHERE p.cityOfLiving = :city")
-                .setParameter("city", city)
-                .getResultList();
-    }
+    List<Person> findByCityOfLiving(@Param("cityOfLiving") String cityOfLiving);
+
+    List<Person> findByIdAgeLessThanOrderByIdAge(@Param("age") int age);
+
+    Optional<Person> findByIdNameAndIdSurname(@Param("name") String name, @Param("surname") String surname);
 }

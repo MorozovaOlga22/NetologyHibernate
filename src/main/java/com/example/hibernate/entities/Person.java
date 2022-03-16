@@ -3,8 +3,8 @@ package com.example.hibernate.entities;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
@@ -13,12 +13,8 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class Person implements Serializable {
-    @Id
-    private String name;
-    @Id
-    private String surname;
-    @Id
-    private int age;
+    @EmbeddedId
+    private PersonId id;
     private String phoneNumber;
     private String cityOfLiving;
 }
